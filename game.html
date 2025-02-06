@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Snake Game JavaScript | Kall</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    git init    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <div class="wrapper">
-      <div class="game-details">
-        <span class="score">Score: 0</span>
-        <span class="high-score">High Score: 0</span>
-      </div>
-      <div class="play-board"></div>
-      <div class="controls">
-        <i data-key="ArrowLeft" class="fa-solid fa-arrow-left-long"></i>
-        <i data-key="ArrowUp" class="fa-solid fa-arrow-up-long"></i>
-        <i data-key="ArrowRight" class="fa-solid fa-arrow-right-long"></i>
-        <i data-key="ArrowDown" class="fa-solid fa-arrow-down-long"></i>
-      </div>
-      <audio id="background-music" src="sound/pixel-run-206007.mp3" loop></audio>
-      <audio id="eat-sound" src="sound/eating-sound-effect-36186.mp3"></audio>
-      <audio id="gameover-sound" src="sound/game-over-arcade-6435.mp3"></audio>
-    </div>
-    <script>
-      // Function to play or stop background music based on status
-      function manageBacksound() {
-          const backgroundMusic = document.getElementById('background-music');
-          const backsoundStatus = localStorage.getItem('backsoundStatus') || 'On';
-          if (backsoundStatus === 'On') {
-              backgroundMusic.play();
-          } else {
-              backgroundMusic.pause();
-          }
-      }
 
-      // Initialize backsound status on page load
-      document.addEventListener('DOMContentLoaded', () => {
-          manageBacksound();
-      });
+<head>
+  <meta charset="utf-8">
+  <title>Snake Game JavaScript | Kall</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="game-details">
+      <span class="score">Score: 0</span>
+      <span class="high-score">High Score: 0</span>
+    </div>
+    <div class="play-board"></div>
+    <div class="controls">
+      <i data-key="ArrowLeft" class="fa-solid fa-arrow-left-long"></i>
+      <i data-key="ArrowUp" class="fa-solid fa-arrow-up-long"></i>
+      <i data-key="ArrowRight" class="fa-solid fa-arrow-right-long"></i>
+      <i data-key="ArrowDown" class="fa-solid fa-arrow-down-long"></i>
+    </div>
+    <audio id="background-music" src="sound/pixel-run-206007.mp3" loop></audio>
+    <audio id="eat-sound" src="sound/eating-sound-effect-36186.mp3"></audio>
+    <audio id="gameover-sound" src="sound/game-over-arcade-6435.mp3"></audio>
+  </div>
+  <script>
+    // Function to play or stop background music based on status
+    function manageBacksound() {
+      const backgroundMusic = document.getElementById('background-music');
+      const backsoundStatus = localStorage.getItem('backsoundStatus') || 'On';
+      if (backsoundStatus === 'On') {
+        backgroundMusic.play();
+      } else {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Initialize backsound status on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      manageBacksound();
+    });
   </script>
-  </body>
+</body>
+
 </html>
