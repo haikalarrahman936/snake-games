@@ -58,19 +58,15 @@ body {
   cursor: pointer;
   border-right: 1px solid #171B26;
 }
-.menu, .settings {
+.menu {
   text-align: center;
   margin-top: 20px;
 }
 
-.menu button, .settings button {
+.menu button {
   padding: 10px 20px;
   margin: 10px;
   font-size: 16px;
-}
-
-.settings {
-  display: none;
 }
 
 .pixel-alert {
