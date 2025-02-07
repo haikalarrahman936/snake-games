@@ -13,17 +13,33 @@
             align-items: center;
             height: 100vh;
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Press Start 2P', cursive;
             margin: 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            animation: backgroundAnimation 10s infinite alternate;
         }
+
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
+            100% { background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%); }
+        }
+
         .menu {
             text-align: center;
+            animation: fadeIn 2s ease-in-out;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .menu h1 {
             font-size: 3em;
             margin-bottom: 20px;
-            color: black;
+            color: #61dafb;
         }
+
         .menu button {
             background-color: #61dafb;
             border: none;
@@ -33,23 +49,165 @@
             margin: 10px;
             cursor: pointer;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
         }
+
         .menu button:hover {
             background-color: #21a1f1;
+            transform: scale(1.1);
+        }
+
+        .settings-menu {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #293447;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(52, 87, 220, 0.2);
+            text-align: center;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .settings-menu.visible {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+
+        .settings-menu button {
+            background-color: #61dafb;
+            border: none;
+            color: #282c34;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .settings-menu button:hover {
+            background-color: #21a1f1;
+            transform: scale(1.1);
+        }
+
+        @media screen and (max-width: 600px) {
+            .menu h1 {
+                font-size: 2em;
+            }
+            .menu button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="menu">
-        <h1>Snake Game</h1>
-        <button onclick="startGame()">Start</button>
+        <h1 id="title">Snake Game</h1>
+        <button onclick="startGame()" id="start-button">Start</button>
+        <button onclick="toggleSettingsMenu()" id="settings-button">Settings</button>
+    </div>
+    <div id="settings-menu" class="settings-menu">
+        <h2 id="settings-title">Settings</h2>
+        <label for="control-type" id="control-type-label">Control Type:</label>
+        <select id="control-type">
+            <option value="analog">Analog</option>
+            <option value="buttons">Buttons</option>
+        </select>
+        <br>
+        <label for="language" id="language-label">Language:</label>
+        <select id="language">
+            <option value="en">English</option>
+            <option value="id">Bahasa Indonesia</option>
+        </select>
+        <br>
+        <label for="mute-audio" id="mute-audio-label">Mute Audio:</label>
+        <input type="checkbox" id="mute-audio">
+        <br>
+        <button onclick="saveSettings()" id="save-button">Save</button>
+        <button onclick="exitGame()" id="exit-button">Exit</button>
     </div>
 
     <script>
+        const translations = {
+            en: {
+                title: "Snake Game",
+                startButton: "Start",
+                settingsButton: "Settings",
+                settingsTitle: "Settings",
+                controlTypeLabel: "Control Type:",
+                languageLabel: "Language:",
+                muteAudioLabel: "Mute Audio:",
+                saveButton: "Save",
+                exitButton: "Exit"
+            },
+            id: {
+                title: "Permainan Ular",
+                startButton: "Mulai",
+                settingsButton: "Pengaturan",
+                settingsTitle: "Pengaturan",
+                controlTypeLabel: "Jenis Kontrol:",
+                languageLabel: "Bahasa:",
+                muteAudioLabel: "Matikan Audio:",
+                saveButton: "Simpan",
+                exitButton: "Keluar"
+            }
+        };
+
         function startGame() {
             window.location.href = 'game.html';
         }
+
+        function toggleSettingsMenu() {
+            document.getElementById('settings-menu').classList.toggle('visible');
+        }
+
+        function saveSettings() {
+            const controlType = document.getElementById('control-type').value;
+            const language = document.getElementById('language').value;
+            const muteAudio = document.getElementById('mute-audio').checked;
+            localStorage.setItem('controlType', controlType);
+            localStorage.setItem('language', language);
+            localStorage.setItem('muteAudio', muteAudio);
+            applyTranslations(language);
+            alert('Settings saved!');
+            toggleSettingsMenu();
+        }
+
+        function exitGame() {
+            if (confirm('Do you want to exit the game?')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function applyTranslations(language) {
+            document.getElementById('title').innerText = translations[language].title;
+            document.getElementById('start-button').innerText = translations[language].startButton;
+            document.getElementById('settings-button').innerText = translations[language].settingsButton;
+            document.getElementById('settings-title').innerText = translations[language].settingsTitle;
+            document.getElementById('control-type-label').innerText = translations[language].controlTypeLabel;
+            document.getElementById('language-label').innerText = translations[language].languageLabel;
+            document.getElementById('mute-audio-label').innerText = translations[language].muteAudioLabel;
+            document.getElementById('save-button').innerText = translations[language].saveButton;
+            document.getElementById('exit-button').innerText = translations[language].exitButton;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const controlType = localStorage.getItem('controlType') || 'analog';
+            const language = localStorage.getItem('language') || 'en';
+            const muteAudio = localStorage.getItem('muteAudio') === 'true';
+            document.getElementById('control-type').value = controlType;
+            document.getElementById('language').value = language;
+            document.getElementById('mute-audio').checked = muteAudio;
+            applyTranslations(language);
+        });
     </script>
 </body>
 </html>
